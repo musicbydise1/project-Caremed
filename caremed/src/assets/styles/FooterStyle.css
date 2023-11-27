@@ -1,0 +1,161 @@
+.footer {
+    background: rgba(0, 186, 226, 0.2);
+    border-radius: 20px;
+    padding: 50px 80px;
+    margin-bottom: 80px;
+}
+
+.footer-boxes {
+    display: grid;
+    grid-template-columns: 45% auto;
+}
+
+.form-header h1{
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0;
+}
+.footer-form-email {
+    margin: 25px 0;
+}
+.footer-form-email input {
+    width: 225px;
+    border-radius: 20px;
+    background: #fff;
+    padding: 10px 40px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+.footer-form-textarea textarea {
+    width: 225px;
+    height: 130px;
+    border-radius: 20px;
+    background: #fff;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    padding: 10px 40px;
+}
+.footer-box form {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-form-btn {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-form-btn input {
+    background: #00BAE2;
+    border-radius: 20px;
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.10);
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid#00BAE2;
+    padding: 10px 70px;
+}
+
+.footer-form-btn input:hover {
+    background: #fff;
+    color: #00BAE2;
+    transition: .3s;
+}
+
+.soc {
+    margin-left: 150px;
+}
+
+.footer-nav nav {
+    padding: 0;
+    border: none;
+    display: block;
+}
+
+.footer-nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+}
+
+.footer-nav ul li {
+    list-style: none;
+    margin-right: 30px;
+}
+
+.footer-nav ul li a {
+    color: #1E1E1E;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+}
+.footer-nav ul li a:hover {
+    color: #fff;
+    transition: .3s;
+}
+
+.footer-social {
+    margin-top: 40px;
+}
+.social-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.social-icons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icon {
+    color: #fff;
+    font-size: 35px;
+    margin-right: 25px;
+    margin-bottom: 150px;
+}
+.social-icon:nth-child(4) {
+    margin-right: 0;
+}
+.social-icon:hover {
+    color: #1E1E1E;
+    transition: .3s;
+}
+
+.copyright p {
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer-social, .copyright {
+    margin-right: 100px;
+}
+
+.patients-reg-btn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 90px;
+}
+
+.patients-reg-btn input {
+    background: #00BAE2;
+    border: 1px solid #00BAE2;
+    color: #fff;
+    border-radius: 20px;
+    padding: 9px 55px;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.patients-reg-btn input:hover {
+    background: #ffffff;
+    color: #00BAE2;
+    transition: .3s;
+}

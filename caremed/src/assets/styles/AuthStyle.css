@@ -1,0 +1,93 @@
+.log {
+    border-radius: 20px;
+    background: #E9E9E9;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.reg {
+    margin-bottom: 80px;
+}
+
+.log-title h1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.form .form-input input {
+    display: block;
+    border-radius: 20px;
+    background: #FFF;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    width: 300px;
+    padding: 10px 38px;
+    margin-bottom: 15px;
+}
+
+.form-input {
+    margin-bottom: 10px;
+}
+
+.log-btn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.log-btn input {
+    width: 200px;
+    padding: 9px 0;
+    text-align: center;
+    border-radius: 20px;
+    background: #00BAE2;
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.10);
+    color: #F1F1F2;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    border: 1px solid #00BAE2;
+    cursor: pointer;
+
+}
+
+.log-btn input:hover {
+    background: transparent;
+    color: #00BAE2;
+    transition: .3s;
+}
+
+.log-nav p {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+
+}
+
+.log-nav a {
+    font-weight: 500;
+    color: #1E1E1E;
+    text-decoration: underline;
+}
+
+.log-nav {
+    margin-bottom: 50px;
+}
+
+.reg {
+}
+
+.form-input select {
+    border-radius: 20px;
+    background: #FFF;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    width: 378px;
+    padding: 10px 38px;
+    margin-bottom: 15px;
+}
