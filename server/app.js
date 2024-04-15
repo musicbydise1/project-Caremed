@@ -49,7 +49,7 @@ app.use('*', (req, res, next) => {
 app.use(errorMiddleware);
 
 // Подключение к базе данных и запуск сервера
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 pool.connect()
     .then(() => {
         app.listen(PORT, () => {
