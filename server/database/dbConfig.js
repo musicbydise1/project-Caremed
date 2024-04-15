@@ -1,20 +1,39 @@
-const mongoose = require('mongoose')
+// dbConfig.js
+
+const { Pool } = require('pg');
 
 const connOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-}
-const MONGO_URI = 'mongodb+srv://admin:admin123@cluster0.i6j8myf.mongodb.net/?retryWrites=true&w=majority' || 'mongodb://localhost:27017/API_TEST'
+  user: 'postgres',
+  host: 'localhost',
+  database: 'caremed',
+  password: 'root',
+  port: 5432,
+};
 
-const connectToDB = async () => {
+const pool = new Pool(connOptions);
+
+const executeQuery = async (queryString, params) => {
+  const client = await pool.connect();
   try {
-    const connect = await mongoose.connect(MONGO_URI, connOptions)
-    if (connect) console.log(`Mongodb connected - ${connect.connection.host}`)
-  } catch (err) {
-    console.log(`Database error ${err}`)
+    const result = await client.query(queryString, params);
+    return result;
+  } finally {
+    client.release();
   }
-}
+};
 
+const checkExistence = async (queryString, params) => {
+  const result = await executeQuery(queryString, params);
+  return result.rows.length > 0;
+};
 
-module.exports = connectToDB
+const insertUser = async (queryString, params) => {
+  await executeQuery(queryString, params);
+};
+
+const getUser = async (queryString, params) => {
+  const result = await executeQuery(queryString, params);
+  return result.rows[0];
+};
+
+module.exports = { executeQuery, checkExistence, insertUser, getUser };

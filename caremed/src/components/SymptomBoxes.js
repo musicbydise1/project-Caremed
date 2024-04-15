@@ -1,6 +1,11 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const SymptomBoxes = () => {
+
+    const { t } = useTranslation();
+
     return (
         <form action="">
             <div className="symptoms-boxes">
@@ -270,9 +275,9 @@ const SymptomBoxes = () => {
         </div>
 
             <div className="sym-button">
-                <a href="/results">
-                    <input type="button" value="start diagnosing"/>
-                </a>
+                <Link to="/results">
+                    <input type="button" value={t("symptomsPage.start")}/>
+                </Link>
             </div>
         </form>
     )

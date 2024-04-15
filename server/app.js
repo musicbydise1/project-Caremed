@@ -1,40 +1,61 @@
-const express = require('express')
+const express = require('express');
+const { Pool } = require('pg');
+const userRoutes = require('./controllers/user');
+const tutorialRoutes = require('./routes/tutorial');
+const errorMiddleware = require('./middlewares/error');
+const cors = require('cors');
+const dashboardRoutes = require('./routes/dashboard'); // Маршруты для панели управления
+const usersRoutes = require('./routes/users'); // Маршруты для пользователей
 
-const connectToDatabase = require('./database/dbConfig')
-const user = require('./routes/user')
-const tutorial = require('./routes/tutorial')
-const errorMiddleware = require('./middlewares/error')
 
-const app = express()
+const app = express();
 
-//express middleware
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
+const connOptions = {
+    user: 'postgres',
+    host: 'localhost',
+    database: 'caremed',
+    password: 'root',
+    port: 5432,
+};
 
+const pool = new Pool(connOptions);
+
+// Middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors());
+
+// Routes
 app.get('/', (req, res) => {
-  res.status(400).send('Api working')
-})
+    res.status(200).send('API working');
+});
 
-app.use('/user', user)
-app.use('/tutorial', tutorial)
+// Используйте правильный путь для маршрута регистрации пользователей
+app.post('/users/signup', userRoutes.signUp);
+app.post('/users/login', userRoutes.login);
+app.post('/users/logout', userRoutes.logout);
+app.use('/admin/dashboard', dashboardRoutes);
+app.use('/admin/users', usersRoutes);
 
-app.use('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    errors: [
-      {
-        msg: 'Route not found',
-      },
-    ],
-  })
-})
+// Обработка несуществующих маршрутов
+app.use('*', (req, res, next) => {
+    res.status(404).json({
+        success: false,
+        errors: [{ msg: 'Route not found' }],
+    });
+});
 
-app.use(errorMiddleware)
+// Middleware обработки ошибок
+app.use(errorMiddleware);
 
-const PORT = process.env.PORT || 3000
-
-connectToDatabase().then(_ => {
-  app.listen(PORT, _ => {
-    console.log(`Server started on port ${PORT}`)
-  })
-})
+// Подключение к базе данных и запуск сервера
+const PORT = process.env.PORT || 3001;
+pool.connect()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server started on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('Failed to connect to database:', err);
+    });

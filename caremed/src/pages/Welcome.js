@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container} from "@mui/material";
+import {Link} from "react-router-dom";
 
 const Welcome = () => {
     return (
@@ -12,8 +13,8 @@ const Welcome = () => {
                             <h2>“CareMed Assistant” is a platform designed for physicians to find diagnoses accurately. To use our platform, create an account or log in to an existing one</h2>
                         </div>
                         <div className="home-btn welcome-btn">
-                            <a href="/login"><input type="button" value="Log in"/></a>
-                            <a href="/signin"><input type="button" value="Sign in"/></a>
+                            <Link to="/login"><input type="button" value="Log in"/></Link>
+                            <Link to="/signin"><input type="button" value="Sign in"/></Link>
                         </div>
                     </div>
 

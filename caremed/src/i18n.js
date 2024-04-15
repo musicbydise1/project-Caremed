@@ -1,20 +1,32 @@
-// i18n.js
+// i18n.js (или как-то иначе названный)
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import Backend from 'i18next-http-backend';
+import English from "./assets/i18n/en.json"
+import Russian from "./assets/i18n/ru.json"
+import Kazakh from "./assets/i18n/kz.json"
 
 i18n
-    .use(Backend)
     .use(initReactI18next)
     .init({
-        backend: {
-            // указываем путь к директории с переводами
-            loadPath: '/assets/i18n/en.json',
+        resources: {
+            en: {
+                translation: English,
+            },
+            ru: {
+                translation: Russian,
+            },
+            kz: {
+                translation: Kazakh,
+            },
         },
-        fallbackLng: 'en',
+        lng: 'en', // язык по умолчанию
+        fallbackLng: 'en', // язык для отката
         interpolation: {
             escapeValue: false,
         },
+        backend: {
+            loadPath: '/assets/i18n/{{lng}}.json'
+        }
     });
 
 export default i18n;

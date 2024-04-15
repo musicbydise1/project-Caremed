@@ -2,6 +2,7 @@ import React from 'react';
 import BlcNavbar from "../components/BlcNavbar";
 import {Container} from "@mui/material";
 import Footer from "../components/Footer";
+import {Link} from "react-router-dom";
 
 const AnalysInput = () => {
     return (
@@ -283,9 +284,9 @@ const AnalysInput = () => {
                 </div>
 
                 <div className="sym-button">
-                    <a href="/results">
+                    <Link to="/results">
                         <input type="button" value="Start Diagnosing"/>
-                    </a>
+                    </Link>
                 </div>
 
             </Container>

@@ -4,5 +4,60 @@
   "patientRegistration": "Patients Registration",
   "english": "English",
   "russian": "Russian",
-  "kazakh": "Kazakh"
+  "kazakh": "Kazakh",
+  "homePage": {
+    "title": "The “CareMed Assistant” platform was created for you to make your work easier and increase the accuracy of diagnosis predictions. Choose the most convenient option for you",
+    "symptomButton": "Check by symptoms",
+    "analysisButton": "Check by analysis",
+    "info": {
+      "first": "100% accuracy of diagnosis predictions",
+      "second": "Ultra-fast results",
+      "third": "Ability to register a customer base",
+      "fourth": "Full description of the diagnosis, causes and treatments"
+    }
+  },
+  "footer": {
+    "formTitle": "Do you have any questions? We will help you",
+    "email": "E-mail address",
+    "text": "Text",
+    "send": "Send",
+    "social": "We on social media"
+  },
+  "patientsPage": {
+    "title": "List of patients",
+    "gender": "Gender",
+    "blood": "Blood Type",
+    "number": "Phone number",
+    "address": "Address",
+    "diagnosis": "Diagnosis",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "patientRegistrationPage": {
+    "title": "Fill the information about patients",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "surname": "Surname",
+    "age": "Age",
+    "address": "Address",
+    "gender": "Gender",
+    "blood": "Blood type",
+    "email": "E-mail address",
+    "number": "Phone number",
+    "diagnosis": "Diagnosis",
+    "register": "Register"
+  },
+  "symptomsPage": {
+    "title": "Please select one or more of the following symptoms",
+    "start": "Start diagnosing"
+  },
+  "resultPage": {
+    "title": "Results based on symptoms",
+    "diagnosis": "Diagnosis",
+    "accuracy": "The level of accuracy",
+    "description": "Description",
+    "causes": "Causes",
+    "symptoms": "Symptoms",
+    "pdf": "Get PDF"
+  }
 }

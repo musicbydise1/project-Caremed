@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import BlcNavbar from "../../components/BlcNavbar";
 import {Container} from "@mui/material";
 import axios from "axios";
+import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         username: '',
@@ -26,10 +30,12 @@ const SignIn = () => {
 
         try {
             // Отправляем данные на сервер
-            const response = await axios.post('http://localhost:3000/user/signup', formData);
+            console.log(formData)
+            const response = await axios.post('http://localhost:3001/users/signup', formData);
 
             // Обработка успешного ответа от сервера
             console.log('Успешно зарегистрированы:', response.data);
+            navigate('/home')
         } catch (error) {
             // Обработка ошибок
             console.error('Ошибка регистрации:', error);
@@ -40,29 +46,32 @@ const SignIn = () => {
 
     return (
         <div>
-            <BlcNavbar />
+            <div style={{marginTop: "100px"}}>
+
+            </div>
             <Container>
                 <div className="log reg">
                     <div className="log-title">
                         <h1>Sign in</h1>
-                        <form className="form" action="" onSubmit={handleSubmit}>
+                        <form className="form" onSubmit={handleSubmit}>
                             <div className="form-input">
                                 <input type="text" name="username" onChange={handleChange} placeholder="Full name"/>
-                                <input type="date" name="dateOfBith" onChange={handleChange} placeholder="Birth"/>
-                                <select name="" id="" onChange={handleChange}>
+                                <input type="date" name="dateOfBirth" onChange={handleChange} placeholder="Birth"/>
+                                <select name="country" id="" onChange={handleChange}>
                                     <option value="">Country</option>
                                     <option value="Kazakhstan">Kazakhstan</option>
                                 </select>
                                 <input type="text" name="city" onChange={handleChange} placeholder="City"/>
                                 <input type="email" name="email" onChange={handleChange} placeholder="E-mail address"/>
-                                <input type="password" name="password" onChange={handleChange} placeholder="Create password"/>
+                                <input type="password" name="password" onChange={handleChange}
+                                       placeholder="Create password"/>
                             </div>
 
                             <div className="log-btn">
-                                <input type="submit" value="Sign in"/>
+                                <input type="submit" value="Sign up"></input>
                             </div>
                             <div className="log-nav reg">
-                                <p>Do you have an account?<a href="/login"> Login!</a></p>
+                                <p>Do you have an account?<Link to="/login"> Login!</Link></p>
                             </div>
                         </form>
                     </div>

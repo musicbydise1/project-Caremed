@@ -1,41 +1,31 @@
-const mongoose = require('mongoose');
+// user.js
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  dateOfBirth: {
-    type: Date,
-    required: true,
-  },
-  country: {
-    type: String,
-    required: true,
-  },
-  city: {
-    type: String,
-    required: true,
-  },
-  tutorials: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Tutorial',
-    },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'caremed',
+  password: 'root',
+  port: 5432,
 });
 
-module.exports = mongoose.model('User', userSchema);
+// Создаем таблицу пользователей, если ее нет
+pool.query(`
+  CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    date_of_birth DATE,
+    country VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  )
+`).then(() => {
+  console.log('User table created or already exists');
+}).catch(err => {
+  console.error('Error creating user table:', err);
+});
+
+module.exports = pool;

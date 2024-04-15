@@ -1,92 +1,88 @@
-const User = require('../models/userModel')
-const bcrypt = require('bcrypt')
-const { validationResult } = require('express-validator')
+const bcrypt = require('bcrypt');
+const { createToken } = require('./tokenUtils'); // Предполагается, что у вас есть модуль для создания токенов
+const db = require('../database/dbConfig'); // Предполагается, что это правильное подключение к базе данных
 
-const { createToken } = require('../utils/jwt')
-const CustomError = require('../models/CustomError')
+class CustomError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+    this.name = this.constructor.name;
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
 
 const signUp = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: errors.array(),
-    });
-  }
-
   const { username, email, password, dateOfBirth, country, city } = req.body;
   try {
-    let user = await User.findOne({ email });
-    if (user) {
-      return next(
-          new CustomError('User with provided email already exists', 403)
-      );
+    // Проверяем, существует ли пользователь с таким email
+    const emailExists = await db.checkExistence('SELECT * FROM users WHERE email = $1', [email]);
+    if (emailExists) {
+      return next(new CustomError('User with provided email already exists', 403));
     }
 
-    // Since username should also be unique
-    user = await User.findOne({ username });
-
-    if (user) {
-      return next(
-          new CustomError('User with provided username already exists', 403)
-      );
+    // Проверяем, существует ли пользователь с таким username
+    const usernameExists = await db.checkExistence('SELECT * FROM users WHERE username = $1', [username]);
+    if (usernameExists) {
+      return next(new CustomError('User with provided username already exists', 403));
     }
 
-    user = new User({
-      username,
-      email,
-      password,
-      dateOfBirth,
-      country,
-      city,
-    });
+    // Хешируем пароль
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // Вставляем нового пользователя в базу данных
+    await db.insertUser(`
+      INSERT INTO users (username, email, password, date_of_birth, country, city)
+      VALUES ($1, $2, $3, $4, $5, $6)
+    `, [username, email, hashedPassword, dateOfBirth, country, city]);
 
-    user.password = hashedPassword;
-
-    await user.save();
-
-    res.status(201).json({ success: true, user });
+    res.status(201).json({ success: true, message: 'User created successfully' });
   } catch (err) {
+    console.error(err);
     next(new CustomError('Something went wrong', 500));
   }
 };
 
-
 const login = async (req, res, next) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: errors.array(),
-    })
-  }
-  const { email, password } = req.body
+  const { email, password } = req.body;
   try {
-    let user = await User.findOne({ email })
+    // Получаем пользователя из базы данных по email
+    const user = await db.getUser('SELECT * FROM users WHERE email = $1', [email]);
 
-    if (!user) return next(new CustomError('Invalid credentials', 400))
-
-    const isMatch = await bcrypt.compare(password, user.password)
-
-    if (!isMatch) {
-      return next(new CustomError(`Invalid credentials`, 400))
+    if (!user) {
+      return next(new CustomError('Invalid credentials', 400));
     }
 
-    const accessToken = createToken({
-      id: user._id,
-    })
-    user.isLoggedIn = true
-    await user.save()
-    res
-      .header('authorization', accessToken)
-      .send({ success: true, accessToken, user })
-  } catch (err) {
-    console.log(err)
-    next(new CustomError('Something went wrong', 500))
-  }
-}
+    // Проверяем совпадение пароля
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return next(new CustomError('Invalid credentials', 400));
+    }
 
-module.exports = { signUp, login }
+    // Генерируем токен аутентификации
+    const accessToken = createToken({ id: user.id });
+
+    // Возвращаем успешный ответ с токеном
+    res.header('Authorization', accessToken).json({
+      success: true,
+      accessToken,
+      user: { id: user.id, username: user.username, email: user.email },
+    });
+  } catch (err) {
+    console.error(err);
+    next(new CustomError('Something went wrong', 500));
+  }
+};
+
+const logout = async (req, res, next) => {
+  try {
+    // Здесь можно было бы добавить проверку наличия токена и его "отзыв",
+    // но на практике в большинстве систем это не требуется.
+
+    res.status(200).json({ success: true, message: 'Logged out successfully' });
+  } catch (err) {
+    console.error(err);
+    next(new CustomError('Something went wrong', 500));
+  }
+};
+
+module.exports = { signUp, login, logout };

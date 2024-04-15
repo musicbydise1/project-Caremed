@@ -18,7 +18,7 @@ nav {
 
 #navbar li {
     list-style: none;
-    padding: 7px 40px;
+    padding: 7px 25px;
     position: relative;
     z-index: 999;
 }
@@ -74,7 +74,6 @@ nav a {
 }
 
 .lang {
-    margin-left: 40px;
 }
 .blc.globus{
     color: #1E1E1E;
@@ -101,7 +100,7 @@ nav a {
 }
 
 .language-dropdown li {
-    padding: 10px;
+    padding: 10px !important;
     cursor: pointer;
 }
 

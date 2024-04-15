@@ -1,43 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Container} from "@mui/material";
 import Navbar from "../components/Navbar";
+import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const Home = () => {
+
+    const { t} = useTranslation();
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const handleLogout = () => {
+        // Добавьте логику выхода из системы
+        setIsAuthenticated(false);
+    };
+
+
     return (
         <div>
-            <Navbar />
+            <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
             <div className="home-back">
             <div className="dark">
                 <Container>
                     <div className="home-text">
                     <div className="home-h">
-                        <h1>The “CareMed Assistant” platform was created for you to make your work easier and increase the accuracy of diagnosis predictions. Choose the most convenient option for you</h1>
+                        <h1>{t('homePage.title')}</h1>
                     </div>
                     <div className="home-btn">
-                        <a href="/symptoms">
-                            <input type="button" value="Check by symptoms"/>
-                        </a>
+                        <Link to="/symptoms">
+                            <input type="button" value={t('homePage.symptomButton')}/>
+                        </Link>
                         <div className="line-1"></div>
-                        <a href="/analysis">
-                            <input type="button" value="Check by analysis"/>
-                        </a>
+                        <Link to="/analysis">
+                            <input type="button" value={t('homePage.analysisButton')}/>
+                        </Link>
                     </div>
                 </div>
                     <div className="home-blocks">
                         <div className="home-block">
-                            <p>100% accuracy of diagnosis predictions</p>
+                            <p>{t('homePage.info.first')}</p>
                         </div>
 
                         <div className="home-block">
-                            <p>Ultra-fast results</p>
+                            <p>{t('homePage.info.second')}</p>
                         </div>
 
                         <div className="home-block">
-                            <p>Ability to register a customer base</p>
+                            <p>{t('homePage.info.third')}</p>
                         </div>
 
                         <div className="home-block">
-                            <p>Full description of the diagnosis, causes and treatments</p>
+                            <p>{t('homePage.info.fourth')}</p>
                         </div>
                         <div className="line-2"></div>
                     </div>
@@ -47,6 +60,7 @@ const Home = () => {
 
             </div>
         </div>
+
         </div>
     )
 };

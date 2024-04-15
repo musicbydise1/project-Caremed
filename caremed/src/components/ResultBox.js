@@ -1,6 +1,9 @@
 import React from 'react';
+import {useTranslation} from "react-i18next";
 
 const ResultBox = () => {
+
+    const { t } = useTranslation();
     return (
         <div>
             <div className="result-boxes grid">
@@ -9,7 +12,7 @@ const ResultBox = () => {
                     <div className="result-box-container">
                         <div className="result-box-row">
                             <div className="result-box-main">
-                                <p><b>Diagnosis</b></p>
+                                <p><b>{t('resultPage.diagnosis')}</b></p>
                             </div>
                             <div className="result-box-cell">
                                 <p>Autism</p>
@@ -18,7 +21,7 @@ const ResultBox = () => {
 
                         <div className="result-box-row">
                             <div className="result-box-main">
-                                <p><b>The level of accuracy</b></p>
+                                <p><b>{t('resultPage.accuracy')}</b></p>
                             </div>
                             <div className="result-box-cell">
                                 <p>89%</p>
@@ -27,7 +30,7 @@ const ResultBox = () => {
 
                         <div className="result-box-row">
                             <div className="result-box-main">
-                                <p><b>Description</b></p>
+                                <p><b>{t('resultPage.description')}</b></p>
                             </div>
                             <div className="result-box-cell">
                                 <p>Autism spectrum disorder is a condition related to brain development that impacts how a person perceives and socializes with others, causing problems in social interaction and communication. The disorder also includes limited and repetitive patterns of behavior. The term "spectrum" in autism spectrum disorder refers to the wide range of symptoms and severity.
@@ -110,7 +113,7 @@ const ResultBox = () => {
                         <div className="result-box-container">
                             <div className="result-box-row">
                                 <div className="result-box-main">
-                                    <p><b>Causes</b></p>
+                                    <p><b>{t('resultPage.causes')}</b></p>
                                 </div>
                                 <div className="result-box-cell">
                                     <p>
@@ -123,7 +126,7 @@ const ResultBox = () => {
 
                             <div className="result-box-row">
                                 <div className="result-box-main">
-                                    <p><b>Symptoms</b></p>
+                                    <p><b>{t('resultPage.symptoms')}</b></p>
                                 </div>
                                 <div className="result-box-cell">
                                     <p>Some children show signs of autism spectrum disorder in early infancy, such as reduced eye contact, lack of response to their name or indifference to caregivers. Other children may develop normally for the first few months or years of life, but then suddenly become withdrawn or aggressive or lose language skills they've already acquired. Signs usually are seen by age 2 years.
@@ -175,7 +178,7 @@ const ResultBox = () => {
             </div>
 
             <div className="sym-button">
-                    <input type="button" value="Get PDF"/>
+                    <input type="button" value={t('resultPage.pdf')}/>
             </div>
         </div>
     )
