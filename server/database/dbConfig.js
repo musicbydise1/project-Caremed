@@ -6,7 +6,7 @@ const connOptions = {
   user: 'postgres',
   host: 'localhost',
   database: 'caremed',
-  password: 'root',
+  password: '',
   port: 5432,
 };
 
