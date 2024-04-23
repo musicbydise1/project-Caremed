@@ -11,9 +11,6 @@ const SignIn = () => {
 
     const [formData, setFormData] = useState({
         username: '',
-        dateOfBirth: '',
-        country: '',
-        city: '',
         email: '',
         password: '',
     });
@@ -31,7 +28,7 @@ const SignIn = () => {
         try {
             // Отправляем данные на сервер
             console.log(formData)
-            const response = await axios.post('http://localhost:3001/users/signup', formData);
+            const response = await axios.post('http://localhost:8080/api/auth/signup', formData);
 
             // Обработка успешного ответа от сервера
             console.log('Успешно зарегистрированы:', response.data);
@@ -56,12 +53,6 @@ const SignIn = () => {
                         <form className="form" onSubmit={handleSubmit}>
                             <div className="form-input">
                                 <input type="text" name="username" onChange={handleChange} placeholder="Full name"/>
-                                <input type="date" name="dateOfBirth" onChange={handleChange} placeholder="Birth"/>
-                                <select name="country" id="" onChange={handleChange}>
-                                    <option value="">Country</option>
-                                    <option value="Kazakhstan">Kazakhstan</option>
-                                </select>
-                                <input type="text" name="city" onChange={handleChange} placeholder="City"/>
                                 <input type="email" name="email" onChange={handleChange} placeholder="E-mail address"/>
                                 <input type="password" name="password" onChange={handleChange}
                                        placeholder="Create password"/>

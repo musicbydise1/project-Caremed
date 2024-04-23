@@ -28,7 +28,7 @@ const Login = () => {
         try {
             // Отправляем данные на сервер
             console.log(formData)
-            const response = await axios.post('http://localhost:3001/users/login', formData);
+            const response = await axios.post('http://localhost:8080/api/auth/signin', formData);
 
             // Обработка успешного ответа от сервера
             console.log('Успешно аутентифицирован:', response.data);

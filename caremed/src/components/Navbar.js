@@ -25,7 +25,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
     const handleLogout = () => {
         onLogout();  // Вызываем функцию onLogout
         setIsUserDropdownOpen(false);  // Закрываем выпадающий список пользователя после выхода
-        navigate('/welcome');  // Перенаправляем пользователя на страницу welcome
+        navigate('/');  // Перенаправляем пользователя на страницу welcome
     };
 
     const handleLanguageSelect = (lang) => {

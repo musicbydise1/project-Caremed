@@ -1,27 +1,27 @@
 {
-  "name": "learn-rest-api",
+  "name": "node-js-jwt-auth-postgresql",
   "version": "1.0.0",
-  "description": "API for learning purpose",
-  "main": "app.js",
+  "description": "Node.js Demo for JWT Authentication with PostgreSQL",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "NODEJS",
-    "REST_API",
-    "mongodb"
+    "node js",
+    "express",
+    "jwt",
+    "authentication",
+    "postgresql"
   ],
-  "author": "sagar karki",
-  "license": "MIT",
+  "author": "bezkoder",
+  "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-validator": "^6.5.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.18",
-    "pg": "^8.11.5",
-    "sequelize": "^6.37.2"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "pg": "^8.11.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.32.1"
   }
 }

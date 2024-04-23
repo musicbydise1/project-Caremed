@@ -13,6 +13,11 @@ import AnalysInput from "../pages/AnalysInput";
 import Dashboard from "../pages/admin/Dashboard";
 import Users from "../pages/admin/Users";
 import AdminPanel from "../components/admin/AdminPanel";
+import Categories from "../pages/admin/Categories";
+import Symptoms from "../pages/admin/Symptoms";
+import AnalysCategories from "../pages/admin/AnalysCategories";
+import AnalysIndicators from "../pages/admin/AnalysIndicators";
+import Diagnos from "../pages/admin/Diagnos";
 
 const Header = () => {
     return (
@@ -29,7 +34,16 @@ const Header = () => {
                     <Route exact path= "/analysis" element={<Analysis />} />
                     <Route exact path="/results" element={<Results />} />
                     <Route exact path="/analysin" element={<AnalysInput />} />
-                    <Route exact path="/admin" element={<AdminPanel />} />
+                    <Route path="/admin" element={<AdminPanel />}>
+                        <Route index element={<Dashboard />} />
+                        <Route path="dashboard" element={<Dashboard />} />
+                        <Route path="users" element={<Users />} />
+                        <Route path="categories" element={<Categories />} />
+                        <Route path="symptoms" element={<Symptoms />} />
+                        <Route path="analys-categories" element={<AnalysCategories />} />
+                        <Route path="analys-indicators" element={<AnalysIndicators />} />
+                        <Route path="diagnos" element={<Diagnos />} />
+                    </Route>
                 </Routes>
             </Router>
         </div>

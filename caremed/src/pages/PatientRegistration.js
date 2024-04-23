@@ -1,5 +1,3 @@
-// src/pages/PatientRegistration.js
-
 import React, { useState } from 'react';
 import BlcNavbar from '../components/BlcNavbar';
 import Footer from '../components/Footer';
@@ -10,78 +8,86 @@ import axios from 'axios';
 const PatientRegistration = () => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        middleName: '',
-        age: '',
+        name: '',
+        year: '',
         address: '',
         gender: '',
-        bloodGroup: '',
+        blood: '',
         email: '',
-        phoneNumber: '',
+        phone: '',
         diagnosis: '',
     });
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [message, setMessage] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+        setFormData(prevData => ({ ...prevData, [name]: value }));
     };
 
     const token = 0
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Предполагаем, что токен получен и сохранен в состоянии/контексте/хранилище
+        const token = '';  // Нужно получить актуальный токен
+
         try {
-            const response = await axios.post('http://localhost:3000/tutorial/new', formData,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                console.log(formData)
+            const response = await axios.post('http://localhost:8080/api/patients/create', formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
             // Обработка успешного ответа от сервера
-            console.log('Client registered:', response.data);
+            console.log('Patient registered:', response.data);
+            setMessage('Registration successful!');  // Уведомление об успешной регистрации
+            setFormData({  // Очистка формы после успешной отправки
+                firstName: '',
+                lastName: '',
+                middleName: '',
+                age: '',
+                address: '',
+                gender: '',
+                bloodGroup: '',
+                email: '',
+                phoneNumber: '',
+                diagnosis: '',
+            });
         } catch (error) {
             // Обработка ошибок
-            console.error('Error registering client:', error);
+            console.error('Error registering patient:', error);
+            setMessage('Registration failed! Please try again.');  // Уведомление об ошибке
         }
+    };
+
+    const handleLogout = () => {
+        setIsAuthenticated(false);
     };
 
     return (
         <div>
-            <BlcNavbar />
+            <BlcNavbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
             <Container>
                 <div className="title">
                     <h1>{t('patientRegistrationPage.title')}</h1>
                 </div>
+
+                {message && <p className="caret-amber-950">{message}</p>}
+
 
                 <form onSubmit={handleSubmit}>
                     <div className="patients-reg-boxes">
                         <div className="patients-reg-box">
                             <input
                                 type="text"
-                                name="firstName"
+                                name="name"
                                 placeholder={t('patientRegistrationPage.firstName')}
                                 onChange={handleInputChange}
                             />
                             <input
-                                type="text"
-                                name="lastName"
-                                placeholder={t('patientRegistrationPage.lastName')}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="text"
-                                name="middleName"
-                                placeholder={t('patientRegistrationPage.surname')}
-                                onChange={handleInputChange}
-                            />
-                            <input
                                 type="number"
-                                name="age"
+                                name="year"
                                 placeholder={t('patientRegistrationPage.age')}
                                 onChange={handleInputChange}
                             />
@@ -102,7 +108,7 @@ const PatientRegistration = () => {
                             />
                             <input
                                 type="text"
-                                name="bloodGroup"
+                                name="blood"
                                 placeholder={t('patientRegistrationPage.blood')}
                                 onChange={handleInputChange}
                             />
@@ -114,7 +120,7 @@ const PatientRegistration = () => {
                             />
                             <input
                                 type="number"
-                                name="phoneNumber"
+                                name="phone"
                                 placeholder={t('patientRegistrationPage.number')}
                                 onChange={handleInputChange}
                             />
