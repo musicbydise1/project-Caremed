@@ -14,9 +14,11 @@ const AnalysCategories = () => {
         fetchCategories();
     }, []);
 
+    const apiUrl = process.env.REACT_APP_API_URL;
+
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/analys-category/show/all');
+            const response = await axios.get(`${apiUrl}/analys-category/show/all`);
             setCategories(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке аналитических категорий:', error);
@@ -43,7 +45,7 @@ const AnalysCategories = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put(`http://localhost:8080/api/analys-category/edit/${editCategory.id}`, { name: editName, description: editDescription });
+            const response = await axios.put(`${apiUrl}/analys-category/edit/${editCategory.id}`, { name: editName, description: editDescription });
             if (response.status === 200) {
                 const updatedCategories = categories.map(p => p.id === editCategory.id ? { ...p, name: editName, description: editDescription } : p);
                 setCategories(updatedCategories);
@@ -58,7 +60,7 @@ const AnalysCategories = () => {
 
     const deleteCategory = async (categoryId) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/api/analys-category/delete/${categoryId}`);
+            const response = await axios.delete(`${apiUrl}/analys-category/delete/${categoryId}`);
             if (response.status === 200) {
                 setCategories(categories.filter(category => category.id !== categoryId));
             } else {
@@ -71,7 +73,7 @@ const AnalysCategories = () => {
 
     const handleCreate = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/analys-category/create', newCategory);
+            const response = await axios.post(`${apiUrl}/analys-category/create`, newCategory);
             if (response.status === 200) {
                 fetchCategories();
                 setNewCategory({ name: '', description: '' });

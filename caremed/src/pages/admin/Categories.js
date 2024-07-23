@@ -12,10 +12,11 @@ const Categories = () => {
     useEffect(() => {
         fetchCategories();
     }, []);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/category/show/all');
+            const response = await axios.get(`${apiUrl}/category/show/all`);
             setCategories(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке категорий:', error);
@@ -40,7 +41,7 @@ const Categories = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put(`http://localhost:8080/api/category/edit/${editCategory.id}`, { name: editName });
+            const response = await axios.put(`${apiUrl}/category/edit/${editCategory.id}`, { name: editName });
             if (response.status === 200) {
                 const updatedCategories = categories.map(p => p.id === editCategory.id ? { ...p, name: editName } : p);
                 setCategories(updatedCategories);
@@ -55,7 +56,7 @@ const Categories = () => {
 
     const deleteCategory = async (categoryId) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/api/category/delete/${categoryId}`);
+            const response = await axios.delete(`${apiUrl}/category/delete/${categoryId}`);
             if (response.status === 200) {
                 setCategories(categories.filter(category => category.id !== categoryId));
             } else {
@@ -68,7 +69,7 @@ const Categories = () => {
 
     const handleCreate = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/category/create', { name: newCategory });
+            const response = await axios.post(`${apiUrl}/category/create`, { name: newCategory });
             if (response.status === 200) {
                 fetchCategories();
                 setNewCategory('');

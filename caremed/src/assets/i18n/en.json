@@ -45,7 +45,9 @@
     "email": "E-mail address",
     "number": "Phone number",
     "diagnosis": "Diagnosis",
-    "register": "Register"
+    "register": "Register",
+    "country": "Country",
+    "city": "City"
   },
   "symptomsPage": {
     "title": "Please select one or more of the following symptoms",

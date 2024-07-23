@@ -1,6 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    // Определение модели
-    const SymptomDiagnosis = sequelize.define("symptomdiagnosis", {
+    const SymptomDiagnosis = sequelize.define("symptomDiagnosis", {
         symptomId: {
             type: Sequelize.INTEGER,
             references: {
@@ -11,10 +10,15 @@ module.exports = (sequelize, Sequelize) => {
         diagnosisId: {
             type: Sequelize.INTEGER,
             references: {
-                model: 'diagnosis',
+                model: 'diagnoses',
                 key: 'id'
             }
+        },
+        probability: {
+            type: Sequelize.FLOAT,
+            allowNull: false
         }
     });
+
     return SymptomDiagnosis;
 };

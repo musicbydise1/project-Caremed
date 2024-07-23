@@ -18,6 +18,7 @@ import Symptoms from "../pages/admin/Symptoms";
 import AnalysCategories from "../pages/admin/AnalysCategories";
 import AnalysIndicators from "../pages/admin/AnalysIndicators";
 import Diagnos from "../pages/admin/Diagnos";
+import LinkDiagnoses from "../pages/admin/LinkDiagnoses";
 
 const Header = () => {
     return (
@@ -27,7 +28,7 @@ const Header = () => {
                     <Route exact path= "/" element = {<Welcome />} />
                     <Route exact path= "/home" element = {<Home />} />
                     <Route exact path= "/login" element = {<Login />} />
-                    <Route exact path= "/signin" element = {<SignIn />} />
+                    {/*<Route exact path= "/signin" element = {<SignIn />} />*/}
                     <Route exact path= "/patients" element = {<Patients />} />
                     <Route exact path= "/pat-reg" element = {<PatientRegistration />} />
                     <Route exact path= "/symptoms" element={<Symtopms />} />
@@ -43,6 +44,7 @@ const Header = () => {
                         <Route path="analys-categories" element={<AnalysCategories />} />
                         <Route path="analys-indicators" element={<AnalysIndicators />} />
                         <Route path="diagnos" element={<Diagnos />} />
+                        <Route path="linkdiagnoses" element={<LinkDiagnoses />} />
                     </Route>
                 </Routes>
             </Router>

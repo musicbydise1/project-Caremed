@@ -17,11 +17,12 @@ const AnalysInput = () => {
     };
 
     const [categories, setCategories] = useState([]);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/analys-category/show'); // Предположим, что ваш API предоставляет эти данные
+                const response = await axios.get(`${apiUrl}/analys-category/show`); // Предположим, что ваш API предоставляет эти данные
                 setCategories(response.data);
             } catch (error) {
                 console.error('Ошибка при загрузке категорий:', error);

@@ -16,9 +16,12 @@ const Symptoms = () => {
         fetchCategories(); // Загружаем категории при загрузке компонента
     }, []);
 
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+
     const fetchSymptoms = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/symptom/show/all');
+            const response = await axios.get(`${apiUrl}/symptom/show/all`);
             setSymptoms(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке симптомов:', error);
@@ -27,7 +30,7 @@ const Symptoms = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/category/show/all');
+            const response = await axios.get(`${apiUrl}/category/show/all`);
             setCategories(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке категорий:', error);
@@ -54,7 +57,7 @@ const Symptoms = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put(`http://localhost:8080/api/symptom/edit/${editSymptom.id}`, { name: editName, categoryId: selectedCategory });
+            const response = await axios.put(`${apiUrl}/symptom/edit/${editSymptom.id}`, { name: editName, categoryId: selectedCategory });
             if (response.status === 200) {
                 const updatedSymptoms = symptoms.map(s => s.id === editSymptom.id ? { ...s, name: editName, categoryId: selectedCategory } : s);
                 setSymptoms(updatedSymptoms);
@@ -69,7 +72,7 @@ const Symptoms = () => {
 
     const deleteSymptom = async (symptomId) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/api/symptom/delete/${symptomId}`);
+            const response = await axios.delete(`${apiUrl}/symptom/delete/${symptomId}`);
             if (response.status === 200) {
                 setSymptoms(symptoms.filter(symptom => symptom.id !== symptomId));
             } else {
@@ -82,7 +85,7 @@ const Symptoms = () => {
 
     const handleCreate = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/symptom/create', { name: newSymptom, categoryId: selectedCategory });
+            const response = await axios.post(`${apiUrl}/symptom/create`, { name: newSymptom, categoryId: selectedCategory });
             if (response.status === 200) {
                 fetchSymptoms();
                 setNewSymptom('');

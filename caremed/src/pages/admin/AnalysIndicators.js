@@ -15,10 +15,11 @@ const AnalysIndicators = () => {
         fetchIndicators();
         fetchCategories(); // Загружаем категории при загрузке компонента
     }, []);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const fetchIndicators = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/analys-indicator/show/all');
+            const response = await axios.get(`${apiUrl}/analys-indicator/show/all`);
             setIndicators(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке аналитических показателей:', error);
@@ -27,7 +28,7 @@ const AnalysIndicators = () => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/analys-category/show/all');
+            const response = await axios.get(`${apiUrl}/analys-category/show/all`);
             setCategories(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке категорий:', error);
@@ -54,7 +55,7 @@ const AnalysIndicators = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put(`http://localhost:8080/api/analys-indicator/edit/${editIndicator.id}`, { name: editName, categoryId: selectedCategory });
+            const response = await axios.put(`${apiUrl}/analys-indicator/edit/${editIndicator.id}`, { name: editName, categoryId: selectedCategory });
             if (response.status === 200) {
                 const updatedIndicators = indicators.map(i => i.id === editIndicator.id ? { ...i, name: editName, categoryId: selectedCategory } : i);
                 setIndicators(updatedIndicators);
@@ -69,7 +70,7 @@ const AnalysIndicators = () => {
 
     const deleteIndicator = async (indicatorId) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/api/analys-indicator/delete/${indicatorId}`);
+            const response = await axios.delete(`${apiUrl}/analys-indicator/delete/${indicatorId}`);
             if (response.status === 200) {
                 setIndicators(indicators.filter(indicator => indicator.id !== indicatorId));
             } else {
@@ -79,10 +80,9 @@ const AnalysIndicators = () => {
             console.error('Ошибка при удалении аналитического показателя:', error);
         }
     };
-
     const handleCreate = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/analys-indicator/create', { name: newIndicator, categoryId: selectedCategory });
+            const response = await axios.post(`${apiUrl}/analys-indicator/create`, { name: newIndicator, categoryId: selectedCategory });
             if (response.status === 200) {
                 fetchIndicators();
                 setNewIndicator('');

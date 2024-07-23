@@ -25,39 +25,34 @@ const PatientRegistration = () => {
         setFormData(prevData => ({ ...prevData, [name]: value }));
     };
 
-    const token = 0
+    const token = ''; // Предполагаем, что токен уже получен
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Предполагаем, что токен получен и сохранен в состоянии/контексте/хранилище
-        const token = '';  // Нужно получить актуальный токен
-
+        const apiUrl = process.env.REACT_APP_API_URL;
         try {
-            const response = await axios.post('http://localhost:8080/api/patients/create', formData, {
+            const response = await axios.post(`${apiUrl}/patients/create`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
-
-            // Обработка успешного ответа от сервера
             console.log('Patient registered:', response.data);
-            setMessage('Registration successful!');  // Уведомление об успешной регистрации
-            setFormData({  // Очистка формы после успешной отправки
-                firstName: '',
-                lastName: '',
-                middleName: '',
-                age: '',
+            setMessage('Registration successful!');
+            setFormData({
+                name: '',
+                year: '',
                 address: '',
+                country: '',
+                city: '',
                 gender: '',
-                bloodGroup: '',
+                blood: '',
                 email: '',
-                phoneNumber: '',
+                phone: '',
                 diagnosis: '',
             });
         } catch (error) {
-            // Обработка ошибок
             console.error('Error registering patient:', error);
-            setMessage('Registration failed! Please try again.');  // Уведомление об ошибке
+            setMessage('Registration failed! Please try again.');
         }
     };
 
@@ -74,7 +69,6 @@ const PatientRegistration = () => {
                 </div>
 
                 {message && <p className="caret-amber-950">{message}</p>}
-
 
                 <form onSubmit={handleSubmit}>
                     <div className="patients-reg-boxes">
@@ -93,6 +87,18 @@ const PatientRegistration = () => {
                             />
                             <input
                                 type="text"
+                                name="country"
+                                placeholder={t('patientRegistrationPage.country')}
+                                onChange={handleInputChange}
+                            />
+                            <input
+                                type="text"
+                                name="city"
+                                placeholder={t('patientRegistrationPage.city')}
+                                onChange={handleInputChange}
+                            />
+                            <input
+                                type="text"
                                 name="address"
                                 placeholder={t('patientRegistrationPage.address')}
                                 onChange={handleInputChange}
@@ -100,18 +106,35 @@ const PatientRegistration = () => {
                         </div>
 
                         <div className="patients-reg-box">
-                            <input
-                                type="text"
+                            <select
                                 name="gender"
-                                placeholder={t('patientRegistrationPage.gender')}
                                 onChange={handleInputChange}
-                            />
-                            <input
-                                type="text"
+                                value={formData.gender}
+                                className="patients-reg-select block mt-4 w-full"
+                            >
+                                <option value="">{t('patientRegistrationPage.gender')}</option>
+                                <option value="male">{t('male')}</option>
+                                <option value="female">{t('female')}</option>
+                            </select>
+
+                            <select
                                 name="blood"
-                                placeholder={t('patientRegistrationPage.blood')}
                                 onChange={handleInputChange}
-                            />
+                                value={formData.blood}
+                                className="patients-reg-select mt-4 w-full"
+                            >
+                                <option value="">{t('patientRegistrationPage.blood')}</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+
+
                             <input
                                 type="email"
                                 name="email"
@@ -134,11 +157,11 @@ const PatientRegistration = () => {
                     </div>
 
                     <div className="patients-reg-btn">
-                        <input type="submit" value={t('patientRegistrationPage.register')} />
+                        <input type="submit" value={t('patientRegistrationPage.register')}/>
                     </div>
                 </form>
 
-                <Footer />
+                <Footer/>
             </Container>
         </div>
     );

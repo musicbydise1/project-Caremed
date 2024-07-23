@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import BlcNavbar from "../../components/BlcNavbar";
 import {Container} from "@mui/material";
 import "../../assets/styles/AuthStyle.css"
 import {Link} from "react-router-dom";
@@ -21,6 +20,8 @@ const Login = () => {
             [e.target.name]: e.target.value,
         });
     };
+    const apiUrl = process.env.REACT_APP_API_URL;
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,16 +29,30 @@ const Login = () => {
         try {
             // Отправляем данные на сервер
             console.log(formData)
-            const response = await axios.post('http://localhost:8080/api/auth/signin', formData);
+            const response = await axios.post(`${apiUrl}/auth/signin`, formData);
 
             // Обработка успешного ответа от сервера
             console.log('Успешно аутентифицирован:', response.data);
-            navigate('/home')
+
+            // Проверяем, есть ли у пользователя роль администратора
+            console.log(response.data.roles[0] === 'ROLE_ADMIN');
+
+            // Перенаправляем пользователя в зависимости от его роли
+            if (response.data.roles[0] === 'ROLE_ADMIN') {
+                // Если пользователь администратор, перенаправляем его на страницу админки
+                navigate('/admin');
+            }
+            else {
+                // Если пользователь не администратор, перенаправляем его на домашнюю страницу
+                navigate('/home');
+            }
         } catch (error) {
             // Обработка ошибок
             console.error('Ошибка регистрации:', error);
         }
     };
+
+
 
 
     return (
@@ -58,9 +73,9 @@ const Login = () => {
                         <div className="log-btn">
                             <input type="submit" value="Log in"/>
                         </div>
-                        <div className="log-nav">
-                            <p>Don’t have an account?<Link to="/signin"> Create one!</Link></p>
-                        </div>
+                        {/*<div className="log-nav">*/}
+                        {/*    <p>Don’t have an account?<Link to="/signin"> Create one!</Link></p>*/}
+                        {/*</div>*/}
                     </form>
                 </div>
             </div>

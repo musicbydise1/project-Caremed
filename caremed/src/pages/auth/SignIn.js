@@ -25,10 +25,13 @@ const SignIn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const apiUrl = process.env.REACT_APP_API_URL;
+
+
         try {
             // Отправляем данные на сервер
             console.log(formData)
-            const response = await axios.post('http://localhost:8080/api/auth/signup', formData);
+            const response = await axios.post(`${apiUrl}/auth/signup`, formData);
 
             // Обработка успешного ответа от сервера
             console.log('Успешно зарегистрированы:', response.data);

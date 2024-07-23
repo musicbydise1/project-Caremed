@@ -598,3 +598,25 @@ input[type=range]::-moz-range-thumb:active {
   max-width: 400px;
   border-radius: 20px;
 }
+
+
+.patients-reg-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+  transition: all 0.3s ease-in-out;
+  font-size: 16px;
+  color: #333;
+}
+
+.patients-reg-select:hover {
+  border-color: #888;
+}
+
+.patients-reg-select:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0,86,179,0.25);
+}

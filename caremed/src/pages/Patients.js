@@ -16,10 +16,10 @@ const Patients = () => {
     useEffect(() => {
         fetchPatients();
     }, []);
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const fetchPatients = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/patients/show/all'); // Путь к вашему API
+            const response = await fetch(`${apiUrl}/patients/show/all`); // Путь к вашему API
             const data = await response.json();
             setPatients(data);
         } catch (error) {
@@ -43,7 +43,7 @@ const Patients = () => {
 
     const handleSave = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/patients/edit/${editPatient.id}`, {
+            const response = await fetch(`${apiUrl}/patients/edit/${editPatient.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const Patients = () => {
 
     const deletePatient = async (patientId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/patients/delete/${patientId}`, {
+            const response = await fetch(`${apiUrl}/patients/delete/${patientId}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
@@ -158,6 +158,28 @@ const Patients = () => {
                             variant="standard"
                             name="year"
                             value={editPatient?.year || ''}
+                            onChange={handleInputChange}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="country"
+                            label="Country"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            name="country"
+                            value={editPatient?.country || ''}
+                            onChange={handleInputChange}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="city"
+                            label="City"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            name="city"
+                            value={editPatient?.city || ''}
                             onChange={handleInputChange}
                         />
                         <TextField

@@ -1,14 +1,30 @@
 module.exports = (sequelize, Sequelize) => {
-    return sequelize.define("symptoms", {
+    const Symptom = sequelize.define("symptoms", {
         name: {
             type: Sequelize.STRING,
+            allowNull: false
         },
         categoryId: {
             type: Sequelize.INTEGER,
             references: {
-                model: 'categories', // имя таблицы в БД
+                model: 'categories',
                 key: 'id'
             }
-        },
+        }
     });
+
+    Symptom.associate = (models) => {
+        Symptom.belongsTo(models.category, {
+            foreignKey: 'categoryId',
+            as: 'category'
+        });
+        Symptom.belongsToMany(models.diagnosis, {
+            through: models.symptomDiagnosis,
+            foreignKey: 'symptomId',
+            otherKey: 'diagnosisId',
+            as: 'diagnoses'
+        });
+    };
+
+    return Symptom;
 };

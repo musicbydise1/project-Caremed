@@ -4,29 +4,39 @@ const controller = require("../controllers/user.controller");
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
+        "Access-Control-Allow-Headers",
+        "x-access-token, Origin, Content-Type, Accept"
     );
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
 
+
+  app.post(
+      "/api/users/create",
+      controller.create
+  );
   app.get(
-    "/api/test/user",
-    [authJwt.verifyToken],
-    controller.userBoard
+      "/api/users/show/all",
+      controller.findAll
+  );
+  app.get(
+      "/api/users/roles/show/all",
+      controller.findAllRole
   );
 
   app.get(
-    "/api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    controller.moderatorBoard
+      "/api/users/show/:id",
+      controller.findOne
   );
 
-  app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
+  app.put(
+      "/api/users/edit/:id",
+      controller.update
+  );
+
+  app.delete(
+      "/api/users/delete/:id",
+      controller.delete
   );
 };
